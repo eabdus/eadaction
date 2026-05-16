@@ -1,0 +1,22 @@
+name: Build Workflow
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Build:
+    runs-on: ubuntu:latest
+    steps:
+      - name: Code checkout
+        actions: actions/checkout@v4
+
+      - name: Maven Build
+        run: mvn install
+
+  Testing:
+    runs-on: ubuntu:latest
+    needs: Build
+    steps:
+      - name: checkstyle
+        run: mvn checkstyle:checkstyle
